@@ -1,0 +1,4 @@
+town : 小镇
+manor : 庄园
+mofan : 莫凡
+meaning : 意

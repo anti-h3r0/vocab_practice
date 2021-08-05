@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+ 
+  "name": "Vocab Practice",
+  "version": "0.1.0",
+  "description": "translate all vocab words into target language",
+ 
+  "content_scripts": [{
+    "css": ["styles.css"],
+    "js": ["content.js"],
+    "matches":["https://www.mtlnovel.com/*"]
+  }],
+
+  "web_accessible_resources":[
+    
+  ]
+ 
+}

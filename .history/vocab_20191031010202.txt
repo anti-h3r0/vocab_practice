@@ -1,0 +1,44 @@
+town : 小镇
+manor : 庄园
+villa : 庄园
+mo fan : 莫凡
+mofan : 莫凡
+mo fam : 莫凡
+xinxia : 心夏
+zhang xiaohou : 张小侯
+zhao manyan : 赵满延
+ling ling : 灵灵
+lingling : 灵灵
+water : 水
+fire : 火
+earth : 地
+window : 窗
+wind : 风
+pool : 水池
+swimming pool : 游泳池
+swimming : 游泳
+pond : 池子
+respond : 回答
+defense : 防御
+magicians : 法师们
+magician : 法师
+fortress : 堡垒
+i am : 我是
+you are : 你是
+he is : 他是
+my : 我的
+i : 我
+yours : 你的
+your : 你的
+you : 你
+hers : 她的
+her : 她
+she : 她
+his : 他的
+him : 他
+he : 他
+goodbye : 再见
+good bye : 再见
+bye : 再见
+eats : 吃
+eat : 吃

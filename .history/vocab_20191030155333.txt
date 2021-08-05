@@ -1,0 +1,9 @@
+town : 小镇
+manor : 庄园
+villa : 庄园
+mo fan : 莫凡
+mofan : 莫凡
+mo fam : 莫凡
+pool : 水池
+swimming pool : 游泳池
+pond : 池子

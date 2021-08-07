@@ -81,6 +81,16 @@
     opacity: 1;
 }
 
+#text-selection-box {
+    display: block;
+    font-size: 10pt;
+}
+
+#text-translation-box {
+    display: block;
+    font-size: 10pt;
+}
+
 #settings-edit-vocab-container {
     display: flex;
     flex-direction: column;
@@ -94,38 +104,72 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+#advanced-buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+.full-width {
     width: 100%;
 }
-#settings-edit-vocab-submit button {
-    background-color: rgb(67, 67, 67);
-    color: rgb(179, 179, 179);
+.half-width {
     width: 50%;
+}
+
+.button {
+    display: inline-block;
+    margin: 0;
+    box-sizing: border-box;
     font-size: 10pt;
     padding: 5px 0;
 }
 
-#settings-edit-vocab-submit button:hover {
+.grey-button {
+    background-color: rgb(67, 67, 67);
+    color: rgb(179, 179, 179);
+}
+.grey-button:hover {
     background-color: rgb(38, 38, 38);
     color: white;
 }
 
-#google-translate-button {
-    display: inline-block;
-    margin: 0;
-    box-sizing: border-box;
-    width: 100%;
-    font-size: 10pt;
-    padding: 5px 0;
+.yellow-button {
+    background-color: rgb(236, 237, 190);
+    color: black;
+}
+.yellow-button:hover {
+    background-color: rgb(180, 182, 75);
+    color: white;
 }
 
-#text-selection-box {
-    display: block;
-    font-size: 10pt;
+.green-button {
+    background-color: rgb(190, 237, 209);
+    color: black;
 }
-#text-translation-box {
-    display: block;
-    font-size: 10pt;
+.green-button:hover {
+    background-color: rgb(89, 179, 125);
+    color: white;
 }
+
+.exit-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    border-radius: 10px;
+    font-size: 10pt;
+    padding: 3px 3px;
+}
+
+
+
 
 .hidden {
     display: none !important;
@@ -140,6 +184,8 @@
     left: 50%;
     transform: translate(-50%, 0px);
     border-radius: 10px;
+    background-color: white;
+    font-size: 10pt;
 }
 
 .success {

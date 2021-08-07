@@ -4,6 +4,7 @@ var endline = "\n";
 var vocab = undefined;
 var timer = null;
 var scroll_speed = 200;
+var topVocab = undefined;
 
 let native_language = "en";
 let target_language = "es";
@@ -50,9 +51,9 @@ async function loadVocab() {
     }
 }
 
-async function saveFile(url, data) {
-    chrome.storage.sync.set({url: data}, function() {
-        // console.log("vocab was saved : " + JSON.stringify(vocab, null, 2));
+async function saveVocab() {
+    // todo : only save differences?
+    chrome.storage.sync.set({vocab: window.vocab}, function() {
         console.log("saving vocab to storage");
     });
 }
@@ -183,7 +184,7 @@ function selectTopVocab(wordCount, vocab) {
     let newVocab = [];
 
     for (let index_hist of wordCount.counts) {
-        if (newVocab.length >= 20) return newVocab;
+        if (newVocab.length >= 100) return newVocab;
 
         for (let potential_vocab of wordCount.dict[index_hist]) {
             if (!(potential_vocab in vocab)) {
@@ -269,7 +270,7 @@ async function alterText() {
 
     if (Object.keys(vocab).length > 0 && html_paragraph_array.length > 0) {
         let word_count = generateWordCount_page(html_paragraph_array);
-        let new_vocab = selectTopVocab(word_count, vocab);
+        topVocab = selectTopVocab(word_count, vocab);
 
         for (let index_hpa = 0; index_hpa < html_paragraph_array.length; index_hpa++) {
             if (!isElementInViewport(html_paragraph_array[index_hpa]))
@@ -353,7 +354,7 @@ async function alterText() {
     for (let ele of elements_missing_onClick)
         ele.classList.remove("missing-onclick-listener");
 
-    await saveFile("vocab", window.vocab);
+    await saveVocab();
 }
 
 function getFluencyValue(vocab_set) {
@@ -427,32 +428,73 @@ function vocabPractice_SettingsIcon() {
     
     let text_translation_submit = document.createElement("button");
     text_translation_submit.textContent = "submit";
-    text_translation_submit.addEventListener("click", submitNewVocab);
+    text_translation_submit.addEventListener("click", newVocabSubmission);
+    text_translation_submit.classList.add("button");
+    text_translation_submit.classList.add("grey-button");
+    text_translation_submit.classList.add("half-width");
 
     let text_translation_cancel = document.createElement("button");
     text_translation_cancel.textContent = "cancel";
     text_translation_cancel.addEventListener("click", function() {
         document.getElementById("settings-edit-vocab-container").classList.add("hidden");
     });
+    text_translation_cancel.classList.add("button");
+    text_translation_cancel.classList.add("grey-button");
+    text_translation_cancel.classList.add("half-width");
     
     let buttons = document.createElement("div");
     buttons.id = "settings-edit-vocab-submit";
+    buttons.classList.add("full-width");
     buttons.appendChild(text_translation_cancel);
     buttons.appendChild(text_translation_submit);
     
+    let translation_api_call = document.createElement("button");
+    translation_api_call.id = "google-translate-button";
+    translation_api_call.textContent = "google translate";
+    translation_api_call.addEventListener("click", updateApiTranslation);
+    translation_api_call.classList.add("button");
+    translation_api_call.classList.add("yellow-button");
+    translation_api_call.classList.add("full-width");
+    
+    let verb_api_call = document.createElement("button");
+    verb_api_call.id = "verb-api-button";
+    verb_api_call.textContent = "verb combos";
+    verb_api_call.addEventListener("click", advancedVerbApiQuery);
+    verb_api_call.classList.add("button");
+    verb_api_call.classList.add("grey-button");
+    verb_api_call.classList.add("half-width");
+    
+    let noun_api_call = document.createElement("button");
+    noun_api_call.id = "noun-api-button";
+    noun_api_call.textContent = "noun combos";
+    noun_api_call.addEventListener("click", advancedNounApiQuery);
+    noun_api_call.classList.add("button");
+    noun_api_call.classList.add("grey-button");
+    noun_api_call.classList.add("half-width");
+    
+    let advanced_buttons = document.createElement("div");
+    advanced_buttons.id = "advanced-buttons-container";
+    advanced_buttons.classList.add("full-width");
+    advanced_buttons.appendChild(verb_api_call);
+    advanced_buttons.appendChild(noun_api_call);
+
+    let recommendations_button = document.createElement("button");
+    recommendations_button.id = "recommendations-button";
+    recommendations_button.textContent = "vocab recommendations";
+    recommendations_button.addEventListener("click", displayTopVocabRecommendations);
+    recommendations_button.classList.add("button");
+    recommendations_button.classList.add("green-button");
+    recommendations_button.classList.add("full-width");
+
     let settings_edit_vocab_container = document.createElement("div");
     settings_edit_vocab_container.id = "settings-edit-vocab-container";
     settings_edit_vocab_container.classList.add("hidden");
     settings_edit_vocab_container.appendChild(text_selection_box);
     settings_edit_vocab_container.appendChild(text_translation_box);
     settings_edit_vocab_container.appendChild(buttons);
-    
-    
-    let translation_api_call = document.createElement("button");
-    translation_api_call.textContent = "google translate";
-    translation_api_call.addEventListener("click", updateApiTranslation);
-    translation_api_call.id = "google-translate-button";
     settings_edit_vocab_container.appendChild(translation_api_call);
+    settings_edit_vocab_container.appendChild(advanced_buttons);
+    settings_edit_vocab_container.appendChild(recommendations_button);
 
     let settings_element = document.createElement("div");
     settings_element.id = "vocab-settings";
@@ -476,10 +518,7 @@ function selectText(selection, translation="") {
     document.getElementById("text-translation-box").value = translation;
 }
 
-async function submitNewVocab() {
-    let selection = document.getElementById("text-selection-box").value.trim().replace("'", "\'");
-    let translation = document.getElementById("text-translation-box").value.trim();
-    
+async function submitNewVocab(selection, translation) {
     if (!selection) {
         alert("selection is empty. could not save input");
         return;
@@ -510,10 +549,51 @@ async function submitNewVocab() {
     document.getElementById("settings-edit-vocab-container").classList.add("hidden");
     toaster("saved translation : '" + selection + "' -> '" + translation + "'");
 }
+async function newVocabSubmission() {
+    submitNewVocab(document.getElementById("text-selection-box").value.trim().replace("'", "\'"), document.getElementById("text-translation-box").value.trim());
+}
 
 async function updateApiTranslation() { 
     document.getElementById("text-translation-box").value = await queryTranslation(native_language, target_language, document.getElementById("text-selection-box").value);
 };
+async function advancedVerbApiQuery() {
+    if (confirm(`362 use-case combinations for the verb '${document.getElementById("text-selection-box").value} will be compiled and translated. Do you wish to continue?`)) {
+        let result = await queryVerbCombinations(native_language, target_language, document.getElementById("text-selection-box").value);
+        if (result && confirm(`save combinations for the verb '${document.getElementById("text-selection-box").value}?`)) {   
+            for (let index of result.sentences.length)
+            submitNewVocab(result.sentences[index], result.translations[index]);
+            await saveVocab();
+            toaster("save complete.");
+            console.log(JSON.stringify(window.vocab, null, 2)); // DEBUG
+        }
+    }
+};
+
+async function advancedNounApiQuery() {
+    alert("this function is not yet implemented")
+    // document.getElementById("text-translation-box").value = await queryNounCombinations(native_language, target_language, document.getElementById("text-selection-box").value);
+};
+
+async function displayTopVocabRecommendations() {
+    let toast_id = "toast_" + toast_counter.toString();
+    toast_counter++;
+    
+    let popup = document.createElement("div");
+    popup.id = toast_id;
+    popup.classList.add("toaster");
+    popup.innerHTML = topVocab.join(" | ");
+
+    let exit_button = document.createElement("button");
+    exit_button.id = "exit-top-vocab-popup";
+    exit_button.classList.add("button");
+    exit_button.classList.add("grey-button");
+    exit_button.classList.add("exit-button");
+    exit_button.textContent = "X";
+    exit_button.addEventListener("click", () => document.getElementById(toast_id).remove() );
+
+    popup.appendChild(exit_button);
+    document.getElementsByTagName("body")[0].appendChild(popup);
+}
 
 async function toaster(text) {
     console.log("toasting : " + text);

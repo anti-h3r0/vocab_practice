@@ -1,9 +1,9 @@
 .translated {
     display: inline-block !important;
     border-style: solid !important;
-    border-width: 0px !important;
+    border-width: 1px !important;
     border-radius: 5px !important;
-    padding: 0px 3px !important;
+    padding: 0px 2px !important;
 }
 
 .translated:hover {
@@ -13,37 +13,44 @@
 
 .new-word {
     background-color: rgb(255, 197, 197) !important;
+    border-color: rgb(255, 197, 197);
     color: rgb(157, 2, 2) !important;
 }
 
 .practicing {
     background-color: rgb(252, 214, 197) !important;
+    border-color: rgb(252, 214, 197);
     color: rgb(145, 94, 0) !important;
 }
 
 .learned-word {
     background-color: rgb(250, 197, 255) !important;
+    border-color: rgb(250, 197, 255);
     color: purple !important;
 }
 
 .semi-fluent {
     background-color: rgb(198, 205, 255) !important;
+    border-color: rgb(198, 205, 255);
     color: rgb(64, 0, 128) !important;
 }
 
 .fluent {
     background-color: rgb(197, 241, 255) !important;
+    border-color: rgb(197, 241, 255);
     color: rgb(0, 0, 121) !important;
 }
 
 .mastered {
     background-color: rgb(197, 197, 197) !important;
+    border-color: rgb(197, 197, 197);
     color: black !important;
 }
 
 
 .ERROR {
-    background-color: rgb(0, 0, 0) !important;
+    background-color: black !important;
+    border-color: black;
     color: red !important;
 }
 

@@ -12,8 +12,8 @@
 }
 
 .new-word {
-    background-color: rgb(255, 197, 197) !important;
-    border-color: rgb(255, 197, 197);
+    background-color: rgb(250, 182, 182) !important;
+    border-color: rgb(250, 182, 182);
     color: rgb(157, 2, 2) !important;
 }
 
@@ -70,9 +70,8 @@
     background-color: rgb(141, 141, 141) !important;
     border-radius: 10px;
     padding: 3px 7px;
-    margin-bottom: 5px;
 
-    font-size: 0.75em;
+    font-size: 10pt;
     color: white;
     opacity: 0.3;
 }
@@ -87,6 +86,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 5px;
 }
 
 #settings-edit-vocab-submit {
@@ -94,22 +94,37 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 #settings-edit-vocab-submit button {
-    opacity: 0.5;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgb(67, 67, 67);
+    color: rgb(179, 179, 179);
+    width: 50%;
+    font-size: 10pt;
+    padding: 5px 0;
 }
+
 #settings-edit-vocab-submit button:hover {
-    opacity: 1;
+    background-color: rgb(38, 38, 38);
+    color: white;
+}
+
+#google-translate-button {
+    display: inline-block;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 10pt;
+    padding: 5px 0;
 }
 
 #text-selection-box {
     display: block;
-    font-size: 0.7em;
+    font-size: 10pt;
 }
 #text-translation-box {
     display: block;
-    font-size: 0.7em;
+    font-size: 10pt;
 }
 
 .hidden {

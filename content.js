@@ -5,6 +5,9 @@ var vocab = undefined;
 var timer = null;
 var scroll_speed = 200;
 
+let native_language = "en";
+let target_language = "es";
+
 var num_new_vocab = 20;
 var HTML_open_tag = "<";
 var HTML_close_tag = ">";
@@ -33,12 +36,12 @@ function readLocalStorage(key) {
     });
 }
 
-async function loadVocab(url) { 
+async function loadVocab() { 
     // read text from url location
     let result = await readLocalStorage('vocab');
     
     if (!result || !result.vocab || Object.keys(result.vocab).length === 0){
-        vocab = await fetch(url);
+        vocab = await fetch(vocab_url);
         vocab = await vocab.json();
         console.log("loading default vocab");
     } else {;
@@ -48,7 +51,7 @@ async function loadVocab(url) {
 }
 
 async function saveFile(url, data) {
-    chrome.storage.sync.set({vocab: vocab}, function() {
+    chrome.storage.sync.set({url: data}, function() {
         // console.log("vocab was saved : " + JSON.stringify(vocab, null, 2));
         console.log("saving vocab to storage");
     });
@@ -350,7 +353,7 @@ async function alterText() {
     for (let ele of elements_missing_onClick)
         ele.classList.remove("missing-onclick-listener");
 
-    await saveFile(vocab_url, window.vocab);
+    await saveFile("vocab", window.vocab);
 }
 
 function getFluencyValue(vocab_set) {
@@ -431,18 +434,25 @@ function vocabPractice_SettingsIcon() {
     text_translation_cancel.addEventListener("click", function() {
         document.getElementById("settings-edit-vocab-container").classList.add("hidden");
     });
-
+    
     let buttons = document.createElement("div");
     buttons.id = "settings-edit-vocab-submit";
     buttons.appendChild(text_translation_cancel);
     buttons.appendChild(text_translation_submit);
-
+    
     let settings_edit_vocab_container = document.createElement("div");
     settings_edit_vocab_container.id = "settings-edit-vocab-container";
     settings_edit_vocab_container.classList.add("hidden");
     settings_edit_vocab_container.appendChild(text_selection_box);
     settings_edit_vocab_container.appendChild(text_translation_box);
     settings_edit_vocab_container.appendChild(buttons);
+    
+    
+    let translation_api_call = document.createElement("button");
+    translation_api_call.textContent = "google translate";
+    translation_api_call.addEventListener("click", updateApiTranslation);
+    translation_api_call.id = "google-translate-button";
+    settings_edit_vocab_container.appendChild(translation_api_call);
 
     let settings_element = document.createElement("div");
     settings_element.id = "vocab-settings";
@@ -501,6 +511,10 @@ async function submitNewVocab() {
     toaster("saved translation : '" + selection + "' -> '" + translation + "'");
 }
 
+async function updateApiTranslation() { 
+    document.getElementById("text-translation-box").value = await queryTranslation(native_language, target_language, document.getElementById("text-selection-box").value);
+};
+
 async function toaster(text) {
     console.log("toasting : " + text);
     let toast_id = "toast_" + toast_counter.toString();
@@ -516,6 +530,7 @@ async function toaster(text) {
 }
 
 async function run(vocab_url) {
+    API_KEY = readLocalStorage("key");
     await loadVocab(vocab_url);
     await alterText();
     vocabPractice_SettingsIcon();

@@ -1,7 +1,7 @@
 todo
 
 Vocab Practice
-
+```
 Note : consider doing it backwards as well. As in, taking a book written in the target language, and translating unknown words back into the native language, while adding new vocab 1-3 at a time. Slowly, fewer and fewer words are translated into English. This would be for advanced applications. Or possibly intermediate applications, depending on the difficulty of the book.
 
 It wouldn't be as fun, but technically, you can start learning with children's books, and eventually make your way up to normal books.
@@ -80,3 +80,4 @@ Refactor the dating sim to :
         - [ ] Also an input box to adjust the translation.
             - [ ] attempt to propagate the fix to other matching translations which use the same pattern & translation
     - [ ] 
+```

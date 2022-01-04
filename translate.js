@@ -1,4 +1,3 @@
-// let API_KEY = undefined;
 let API_KEY = "GOOGLE_TRANSLATE_API_KEY";
 
 async function queryTranslation(from_lang, to_lang, text) {

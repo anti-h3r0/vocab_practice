@@ -2,7 +2,12 @@
 
 practice vocab during daily casual web browsing
 
-*(screenshot below - note, I'm missing a screenshot of the settings GUI popup)*
+
+
+## images
+*(note, I'm missing a screenshot of the settings GUI popup)*
+![alt text](https://github.com/anti-h3r0/vocab_practice/blob/main/screenshots/alpha%20testing.png)
+
 
 ## description
 - This is a chrome extension that alters web pages to practice foreign language vocabulary by replacing any vocab you know with it's associated foreign word.
@@ -28,6 +33,3 @@ practice vocab during daily casual web browsing
 ```
 
 
-
-## images
-![alt text](https://github.com/anti-h3r0/vocab_practice/blob/main/screenshots/alpha%20testing.png)

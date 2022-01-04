@@ -8,7 +8,7 @@
 
 .translated:hover {
     cursor: pointer;
-    opacity: 0.5;
+    border: 3px solid rgb(52, 52, 52);
 }
 
 .new-word {
@@ -54,6 +54,10 @@
     color: red !important;
 }
 
+
+
+
+
 #vocab-settings {
     display: flex;
     flex-direction: column;
@@ -66,12 +70,18 @@
     top: 5px !important;
 }
 
+#vocab-settings div {
+    width: 100%;
+    font-size: 8pt;
+}
+
 #settings-icon {
     background-color: rgb(141, 141, 141) !important;
     border-radius: 10px;
     padding: 3px 7px;
 
-    font-size: 10pt;
+    text-align: center;
+
     color: white;
     opacity: 0.3;
 }
@@ -81,39 +91,40 @@
     opacity: 1;
 }
 
-#text-selection-box {
-    display: block;
-    font-size: 10pt;
-}
-
-#text-translation-box {
-    display: block;
-    font-size: 10pt;
-}
-
 #settings-edit-vocab-container {
+    margin-top: 5px;
+}
+
+#settings-edit-vocab-container input {
+    display: block;
+}
+
+#notifications div {
+    margin-top: 5px;
+    padding: 5px;
+    width: 100%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#notifications div:hover {
+    cursor: pointer;
+}
+
+
+
+.flex-column {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 5px;
 }
-
-#settings-edit-vocab-submit {
+.flex-row {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
-
-#advanced-buttons-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-
 
 
 
@@ -123,21 +134,25 @@
 .half-width {
     width: 50%;
 }
+.display-block {
+    display: block;
+}
+
+
 
 .button {
     display: inline-block;
     margin: 0;
     box-sizing: border-box;
-    font-size: 10pt;
     padding: 5px 0;
 }
 
 .grey-button {
-    background-color: rgb(67, 67, 67);
-    color: rgb(179, 179, 179);
+    background-color: rgb(159, 159, 159);
+    color: rgb(85, 85, 85);
 }
 .grey-button:hover {
-    background-color: rgb(38, 38, 38);
+    background-color: rgb(91, 91, 91);
     color: white;
 }
 
@@ -146,7 +161,7 @@
     color: black;
 }
 .yellow-button:hover {
-    background-color: rgb(180, 182, 75);
+    background-color: rgb(128, 103, 64);
     color: white;
 }
 
@@ -155,25 +170,68 @@
     color: black;
 }
 .green-button:hover {
-    background-color: rgb(89, 179, 125);
+    background-color: rgb(59, 110, 55);
+    color: white;
+}
+
+.red-button {
+    background-color: rgb(237, 190, 190);
+    color: black;
+}
+.red-button:hover {
+    background-color: rgb(151, 76, 76);
     color: white;
 }
 
 .exit-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
+    position: absolute;
+    display: block;
+    top: 5px;
+    left: 5px;
     border-radius: 10px;
-    font-size: 10pt;
-    padding: 3px 3px;
+
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 8px;
+    padding-top: 7px;
+}
+.exit-button:hover {
+    background-color: rgb(141, 48, 48);
+    color: rgb(253, 121, 121);
 }
 
 
 
-
-.hidden {
-    display: none !important;
+.popup {
+    display: flex;
+    max-width: 50vw;
+    max-height: 90vh;
+    overflow: scroll;
 }
+
+.recommendation-token {
+    display: inline-block;
+    text-align: left;
+    border: 1px solid rgb(221, 221, 221);
+    background-color: rgb(221, 221, 221);
+    border-radius: 5px;
+    padding: 3px;
+    margin: 2px;
+    opacity: 0.7;
+}
+
+.recommendation-token:hover {
+    cursor: pointer;
+
+    border: 1px solid rgb(38, 38, 38);
+    background-color:rgb(38, 38, 38);
+    color: white;
+    opacity: 1;
+}
+
+
+
 
 .toaster {
     display: block;
@@ -191,7 +249,15 @@
 .success {
     background-color: rgb(199, 237, 199);
 }
-
 .failure {
     background-color: rgb(237, 199, 199);
+}
+.neutral {
+    background-color: rgb(227, 217, 177);
+}
+
+
+
+.hidden {
+    display: none !important;
 }

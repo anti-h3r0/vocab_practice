@@ -6,7 +6,7 @@
   "description": "translate all vocab words into target language",
  
   "content_scripts": [{
-    "css": ["styles.css"],
+    "css": ["styles.css", "tooltip.css"],
     "js": ["content.js", "translate.js"],
     "matches":["*://*/*"]
   }],
